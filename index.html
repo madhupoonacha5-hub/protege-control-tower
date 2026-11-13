@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DataLab Control Tower: a work sample by Madhu Poonacha</title>
+<style>
+:root{--bg:#e9eef2;--card:#fff;--ink:#0b2545;--mut:#566574;--line:#cfd8df;--teal:#0e8f87;--red:#c8553d;--soft:#f3f6f8}
+@media(prefers-color-scheme:dark){:root{--bg:#08121f;--card:#0f2238;--ink:#e8eef4;--mut:#9db0c0;--line:#23405e;--teal:#2cc4ba;--red:#e8795f;--soft:#142c46}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums}
+.w{max-width:1120px;margin:0 auto;padding:22px 16px 56px}
+h1{font:800 clamp(28px,5.2vw,46px)/1.05 system-ui,sans-serif;letter-spacing:-.025em;margin:4px 0 10px;max-width:16em}
+h2{font-size:18px;margin:0}
+p{margin:0 0 8px}
+.k{color:var(--teal);font-weight:700;margin:0}
+.lead{max-width:62ch;color:var(--mut)}
+.note{display:inline-block;border:1px solid var(--red);color:var(--red);border-radius:4px;padding:2px 8px;font-size:13px}
+.bar{position:sticky;top:0;z-index:5;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px;margin:18px 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.bar b{margin-right:auto}
+button,select{font:inherit;color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer}
+button.p{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.ev{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:-6px 0 18px}
+.ev span{color:var(--mut);margin-right:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:820px){.two{grid-template-columns:1fr}}
+.pn{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px;border-top:5px solid var(--red)}
+.pn.os{border-top-color:var(--teal)}
+.sb{color:var(--mut);font-size:13px}
+.tl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.tl div{background:var(--soft);border-radius:6px;padding:8px 10px}
+.tl b{display:block;font-size:24px;line-height:1.1}
+.tl span{font-size:12px;color:var(--mut)}
+.lns{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.ln{background:var(--soft);border-radius:6px;padding:6px;min-height:104px}
+.ln b{font-size:17px}
+.ln span{font-size:12px;color:var(--mut);margin-left:4px}
+.dots{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px}
+.dots i{width:9px;height:9px;border-radius:2px;display:block}
+.dots i.od{outline:2px solid var(--red);outline-offset:1px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px;margin-top:14px}
+.leg{font-size:13px;color:var(--mut)}
+.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 10px;vertical-align:-1px}
+svg{width:100%;height:auto;display:block;margin-top:6px}
+.three{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media(max-width:820px){.three{grid-template-columns:1fr}}
+.three .card{margin:0}
+ul{padding-left:18px;margin:6px 0}
+li{margin-bottom:6px}
+li em{display:block;font-style:normal;color:var(--mut);font-size:13px}
+li i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
+.lg li p{margin:2px 0;font-size:13.5px;color:var(--mut)}
+label{display:grid;grid-template-columns:110px 1fr 24px;gap:8px;align-items:center;font-size:14px}
+pre{white-space:pre-wrap;background:var(--soft);border-radius:6px;padding:10px;font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;margin:8px 0 0}
+details{margin-top:14px;color:var(--mut)}
+summary{cursor:pointer;color:var(--ink);font-weight:600}
+footer{margin-top:26px;color:var(--mut);font-size:14px}
+a{color:var(--teal)}
+</style>
+</head>
+<body>
+<div class="w">
+<header>
+<p class="k">DataLab Control Tower, a work sample by Madhu Poonacha</p>
+<h1>Same demand. Two ways of running the DataLab.</h1>
+<p class="lead">On the left, requests are handled ad hoc through Slack and memory. On the right, the operating system I would install in the first 90 days: one intake, a transparent score, a work-in-progress limit, an early privacy gate and a fast lane. Both sides face the identical 12-week request stream and the same shocks.</p>
+<p><span class="note">Synthetic data and simulated automation, built only from the public job posting. Not Protege data or process.</span></p>
+</header>
+
+<div class="bar">
+<b id="clk">Week 1, day 0 of 60</b>
+<button class="p" id="run" onclick="tg()">Pause</button>
+<button onclick="td();render()">Step one day</button>
+<button onclick="reset()">Restart</button>
+<select id="dm" aria-label="Demand level" onchange="M=+this.value;reset()"><option value="1">Demand 1x</option><option value="2" selected>Demand 2x</option><option value="3">Demand 3x</option></select>
+<select aria-label="Speed" onchange="speed=+this.value"><option value="3">Slow</option><option value="6" selected>Normal</option><option value="14">Fast</option></select>
+<label style="display:flex;gap:6px;grid-template-columns:none"><input type="checkbox" id="au" checked onchange="auto=this.checked"> Scripted shocks</label>
+</div>
+<div class="ev"><span>Inject now:</span>
+<button onclick="inj('ceo')">CEO urgent ask</button>
+<button onclick="inj('pii')">PII found in a source</button>
+<button onclick="inj('out')">Researcher out a week</button>
+<button onclick="inj('spike')">Demand spike</button></div>
+
+<div class="two"><section class="pn" id="L"></section><section class="pn os" id="R"></section></div>
+<p class="leg"><i style="background:#1c5d99"></i>Partner feasibility<i style="background:#12a39a"></i>Data sample<i style="background:#e9b44c"></i>Evaluation study<i style="background:#c8553d"></i>CEO ask. An outlined square is past its due date.</p>
+
+<div class="card"><h2>Open requests over time</h2>
+<p class="sb">Brick is ad hoc. Teal is the operating system. Under load, the gap is the cost of working without a system.</p><div id="ch"></div></div>
+
+<div class="three">
+<div class="card"><h2>Transparent prioritization</h2>
+<p class="sb">Change the weights and the operating system re-ranks live. The CEO still makes the final call, and the reasoning is visible.</p>
+<label>Value<input type="range" min="0" max="10" value="6" oninput="Wt.v=+this.value;sk()"><span>6</span></label>
+<label>Urgency<input type="range" min="0" max="10" value="5" oninput="Wt.u=+this.value;sk()"><span>5</span></label>
+<label>Effort (lower wins)<input type="range" min="0" max="10" value="3" oninput="Wt.e=+this.value;sk()"><span>3</span></label>
+<label>Risk (lower wins)<input type="range" min="0" max="10" value="3" oninput="Wt.r=+this.value;sk()"><span>3</span></label>
+<p class="sb" style="margin-top:10px">Top of the stack now</p><ul id="st"></ul></div>
+<div class="card"><h2>Weekly CEO brief, written automatically</h2>
+<p class="sb">One page: shipped, in progress, at risk, deferred, decision needed.</p><pre id="br"></pre>
+<p style="margin-top:10px"><button onclick="dl()">Download audit JSON</button></p>
+<p class="sb" id="au2" style="margin-top:8px"></p></div>
+</div>
+
+<div class="card lg"><h2>Decision log</h2><p class="sb">Each shock, and how each way of working responds.</p><ul id="lg"></ul></div>
+
+<div class="card"><h2>What this demonstrates against the posting</h2><ul>
+<li>Intake, prioritization, resourcing: one queue, a visible score, a work-in-progress limit and a fast lane for urgent, high-value work.</li>
+<li>Delivery from concept to launch: privacy review moves to the front and quality criteria are set at intake, so rework falls.</li>
+<li>Bottlenecks: stalled work stacks up in a lane you can see, instead of in someone's head.</li>
+<li>Operating rhythm and dashboards: six metrics that matter, refreshed daily, plus a weekly brief.</li>
+<li>Executive communication: the brief and decision log are generated from the same data, so the CEO never has to chase.</li>
+<li>Operator in residence: the injected shocks are the judgment calls I would make live, then automate.</li></ul>
+<details><summary>Assumptions and what is simulated</summary><ul>
+<li>Team capacity is 6 person-days a day, plus 1.5 a day of privacy review. A researcher out removes 1.5 for five days.</li>
+<li>Ad hoc work spreads capacity across every open item. Coordination overhead starts at 25% and rises with open items, up to 55%. The privacy check comes last, so a PII finding sends prepared work back. Quality checks fail 20% of the time.</li>
+<li>The operating system keeps overhead at 10% through automation, limits work in progress to 7, scores requests, runs the privacy gate before prep and fails quality checks 7% of the time because acceptance criteria are set at intake. Urgency of 9 or more with value of 6 or more uses the fast lane.</li>
+<li>Requests are random but seeded, so both sides see the same stream. All numbers are illustrative, not measured.</li>
+<li>Automation hours assume 0.4 hours per request for intake and routing, 3 hours a week for status and the brief, and 0.5 hours per delivery for updates. The privacy gate and CEO decisions stay human.</li></ul></details>
+</div>
+<footer>Built by Madhu Poonacha for the Head of Operations, DataLab conversation. <a href="mailto:madhu.poonacha5@gmail.com">madhu.poonacha5@gmail.com</a> and <a href="https://linkedin.com/in/madhubk">linkedin.com/in/madhubk</a>. This is a single static file with no tracking or external calls.</footer>
+</div>
+<script>
+const $=i=>document.getElementById(i);
+const TY=['Partner feasibility','Data sample','Evaluation study','CEO ask'],CO=['#1c5d99','#12a39a','#e9b44c','#c8553d'];
+const LN=['Queue','Scoping','Privacy','Prep','QC'],SC={12:'ceo',25:'pii',35:'out',45:'spike'};
+const Wt={v:6,u:5,e:3,r:3};
+let M=2,day=0,run=true,speed=6,auto=true,outUntil=-1,ext=[],stream=[],A,B,logs=[],nid=0,acc=0;
+function mb(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function mk(r,d,o){const x={id:++nid,a:d,t:Math.floor(r()*3.6),v:1+Math.floor(r()*9),e:1+Math.floor(r()*5),k:r(),u:1+Math.floor(r()*9),p:r()<.25,deal:r()<.5,h:r(),due:d+5+Math.floor(r()*8)};return Object.assign(x,o||{})}
+function gen(){nid=0;const r=mb(7),q=[];for(let d=0;d<60;d++){const n=Math.floor(.9*M+r());for(let i=0;i<n;i++)q.push(mk(r,d))}return q}
+function Eng(os){return{os:os,it:[],used:0,cs:0,hist:[]}}
+const ordOf=E=>E.os?[0,1,2,3,4]:[0,1,3,4,2];
+function need(x,s,E){return s==1?.25*x.e+.2:s==2?.3+(x.p&&E.os?.4:0):s==3?.5*x.e+.3:.2*x.e+.2}
+const fl=x=>x.u>=9&&x.v>=6;
+const sc=x=>Wt.v*x.v+Wt.u*x.u-Wt.e*x.e-Wt.r*x.k*10+(fl(x)?200:0);
+function go(E,x,d){const o=ordOf(E),cur=o[x.s];
+if(cur==2&&!E.os&&x.p&&!x.fx){x.fx=1;x.rw++;x.s=o.indexOf(3);x.w=.5*x.e+.3;x.p=false;return}
+if(cur==4&&!x.q&&x.h<(E.os?.07:.2)){x.q=1;x.rw++;x.s=o.indexOf(3);x.w=.25*x.e+.2;return}
+if(x.s==o.length-1){x.dn=d;return}
+x.s++;x.w=need(x,o[x.s],E)}
+function step(E,arr,d){
+arr.forEach(x=>{const y=Object.assign({},x,{s:0,w:0,rw:0,dn:null,fx:0,q:0});E.it.push(y);if(!E.os){y.s=1;y.w=need(y,1,E)}});
+const o=ordOf(E),open=E.it.filter(x=>x.dn==null),sid=x=>o[x.s];
+if(E.os){let wip=open.filter(x=>x.s>0).length;open.filter(x=>x.s==0).sort((a,b)=>sc(b)-sc(a)).forEach(x=>{if(wip<7||fl(x)){x.s=1;x.w=need(x,1,E);wip++}})}
+const cap=6-(d<outUntil?1.5:0),wk=open.filter(x=>x.s>0&&sid(x)!=2),al=[];
+if(E.os){let rem=cap*.9;wk.sort((a,b)=>sc(b)-sc(a)).forEach(x=>{const g=Math.min(1,rem);if(g>0){al.push([x,g]);rem-=g}})}
+else{const n=wk.length,ov=Math.min(.55,.25+.015*Math.max(0,n-6)),net=cap*(1-ov),wt=x=>(x.t==3||x.u>=9)?2:1,tw=wk.reduce((s,x)=>s+wt(x),0);wk.forEach(x=>al.push([x,Math.min(1.5,net*wt(x)/tw)]))}
+const pv=open.filter(x=>x.s>0&&sid(x)==2);if(E.os)pv.sort((a,b)=>sc(b)-sc(a));
+let pr=1.5;pv.forEach(x=>{const g=Math.min(1,pr);if(g>0){al.push([x,g]);pr-=g}});
+let u=0;al.forEach(p=>{p[0].w-=p[1];u+=p[1];if(p[0].w<=1e-9)go(E,p[0],d)});
+E.used+=u;E.cs+=cap+1.5;E.hist.push(E.it.filter(x=>x.dn==null).length)}
+function mt(E,d){const dn=E.it.filter(x=>x.dn!=null),op=E.it.filter(x=>x.dn==null),cy=dn.map(x=>x.dn-x.a+1).sort((a,b)=>a-b),pc=n=>dn.length?Math.round(100*n/dn.length):0;
+return{n:dn.length,cy:cy.length?cy[cy.length>>1]:0,ot:pc(dn.filter(x=>x.dn<=x.due).length),fp:pc(dn.filter(x=>!x.rw).length),ba:op.length?+(op.reduce((s,x)=>s+d-x.a,0)/op.length).toFixed(1):0,vl:dn.filter(x=>x.deal).reduce((s,x)=>s+x.v,0),op:op.length}}
+function L(t,o,a){logs.unshift({d:day,t:t,o:o,a:a})}
+function inj(k){const r=mb(day*31+k.length+nid);
+if(k=='ceo'){ext.push(mk(r,day,{t:3,v:9,u:10,e:3,p:false,due:day+5}));L('CEO urgent ask','Fast lane: it starts today, ahead of the queue.','It joins the pile and capacity spreads thinner across every open item.')}
+if(k=='pii'){[A,B].forEach(E=>{const x=E.it.find(y=>y.dn==null&&!y.p&&y.s<=2);if(x){x.p=true;if(E.os&&x.s==2)x.w+=.4}});L('PII found in a source dataset','Caught at the early privacy gate, with mitigation scheduled before prep.','Found at the late gate, so prepared work is sent back for rework.')}
+if(k=='out'){outUntil=day+5;L('Researcher out for a week','Capacity drops 25%. The work-in-progress limit protects delivery dates.','Capacity drops 25% and every open item slows at once.')}
+if(k=='spike'){for(let i=0;i<8;i++)ext.push(mk(r,day));L('Demand spike: 8 new requests','Intake scores them. Low-value items wait below the cut-line.','All 8 start immediately and context-switching cost climbs.')}
+render()}
+function td(){if(day>=60){run=false;return}
+if(auto&&SC[day])inj(SC[day]);
+const arr=stream.filter(x=>x.a==day).concat(ext);ext=[];step(A,arr,day);step(B,arr,day);day++}
+function lanes(E){const o=ordOf(E);return o.map(id=>{const it=E.it.filter(x=>x.dn==null&&o[x.s]==id);return `<div class="ln"><b>${it.length}</b><span>${LN[id]}</span><div class="dots">${it.map(x=>`<i title="#${x.id} ${TY[x.t]}" class="${day>x.due?'od':''}" style="background:${CO[x.t]}"></i>`).join('')}</div></div>`}).join('')}
+function panel(E,t,s){const m=mt(E,day);return `<h2>${t}</h2><p class="sb">${s}</p><div class="tl">${[[m.n,'delivered'],[m.cy+'d','median cycle time'],[m.ot+'%','on time'],[m.fp+'%','first pass, no rework'],[m.ba+'d','average backlog age'],[m.vl,'deal-linked value shipped']].map(a=>`<div><b>${a[0]}</b><span>${a[1]}</span></div>`).join('')}</div><div class="lns">${lanes(E)}</div>`}
+function chart(){const W=520,H=120,mx=Math.max(10,...A.hist,...B.hist),p=(h,c)=>`<polyline fill="none" stroke="${c}" stroke-width="2.5" points="${h.map((v,i)=>(i*W/59).toFixed(1)+','+(H-4-v*(H-10)/mx).toFixed(1)).join(' ')}"/>`;return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Open requests over time, ad hoc versus operating system"><line x1="0" y1="${H-3}" x2="${W}" y2="${H-3}" stroke="currentColor" opacity=".2"/>${p(A.hist,'#c8553d')}${p(B.hist,'#12a39a')}</svg>`}
+function sk(){const q=B.it.filter(x=>x.dn==null).sort((a,b)=>sc(b)-sc(a)).slice(0,5);$('st').innerHTML=q.map(x=>`<li><i style="background:${CO[x.t]}"></i>#${x.id} ${TY[x.t]}<em>value ${x.v}, urgency ${x.u}, effort ${x.e}d${fl(x)?', fast lane':''}</em></li>`).join('')||'<li>Nothing open yet.</li>';
+const t=$('au2');t.textContent='Automation ledger: about '+Math.round(A.it.length*.4+day/5*3+B.it.filter(x=>x.dn!=null).length*.5)+' hours of intake, routing, status and reporting work removed so far. Human checkpoints: privacy gate and CEO decisions.'}
+function brief(){const m=mt(B,day),open=B.it.filter(x=>x.dn==null),q=open.filter(x=>x.s==0),act=open.filter(x=>x.s>0).sort((a,b)=>sc(b)-sc(a)),risk=open.filter(x=>x.due-day<=2),dd=Math.round(q.reduce((s,x)=>s+x.e,0)/5);
+return 'Week '+Math.max(1,Math.ceil(day/5))+' brief (day '+day+' of 60)\n\nShipped: '+m.n+' requests, '+m.ot+'% on time, '+m.fp+'% first pass.\nIn progress: '+(act.slice(0,3).map(x=>'#'+x.id+' '+TY[x.t]).join('; ')||'nothing yet')+'.\nAt risk: '+(risk.length?risk.slice(0,4).map(x=>'#'+x.id+(day>x.due?' (late)':' (due in '+(x.due-day)+'d)')).join(', '):'none')+'.\nDeferred: '+q.length+' queued, about '+dd+' days of work. Lowest scored: '+(q.sort((a,b)=>sc(a)-sc(b)).slice(0,3).map(x=>'#'+x.id).join(', ')||'none')+'.\nDecision needed: '+(dd>8?'defer the lowest-scored requests or add capacity; the queue is '+dd+' days deep.':act.some(fl)?'confirm the fast-lane request may pause lower-scored work.':'none.')}
+function render(){
+$('clk').textContent='Week '+Math.max(1,Math.ceil(day/5))+', day '+day+' of 60'+(day>=60?' (complete)':'');
+$('run').textContent=run&&day<60?'Pause':'Run';
+$('L').innerHTML=panel(A,'Ad hoc','Slack, memory and whoever shouts loudest. Everything starts at once.');
+$('R').innerHTML=panel(B,'Operating system','One queue, a visible score, a limit on work in progress, an early privacy gate.');
+$('ch').innerHTML=chart();sk();$('br').textContent=brief();
+$('lg').innerHTML=logs.map(l=>`<li><b>Day ${l.d}: ${l.t}</b><p>Operating system: ${l.o}</p><p>Ad hoc: ${l.a}</p></li>`).join('')||'<li>No shocks yet. They arrive on days 12, 25, 35 and 45, or inject your own.</li>'}
+function tg(){if(day>=60){reset();return}run=!run;render()}
+function reset(){day=0;ext=[];logs=[];outUntil=-1;acc=0;stream=gen();A=Eng(false);B=Eng(true);run=true;render()}
+function dl(){const o={note:'Synthetic simulation. Illustrative numbers only.',demand:M+'x',day:day,weights:Wt,adHoc:mt(A,day),operatingSystem:mt(B,day),events:logs.slice().reverse()},a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o,null,2)],{type:'application/json'}));a.download='datalab-audit.json';a.click()}
+setInterval(()=>{if(!run)return;acc+=speed/10;while(acc>=1&&day<60){acc--;td()}if(day>=60)run=false;render()},100);
+reset();
+</script>
+</body>
+</html>
